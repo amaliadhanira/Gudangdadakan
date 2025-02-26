@@ -1,26 +1,28 @@
 package com.miniproject.gudangdadakan.Controller;
 
+import com.miniproject.gudangdadakan.Dao.PenggunaDao;
 import com.miniproject.gudangdadakan.Model.Pengguna;
-import com.miniproject.gudangdadakan.Service.Impl.PenggunaServiceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/pengguna")
 public class PenggunaController {
-    private PenggunaServiceImpl penggunaService;
-    private Pengguna user;
+
+    @Autowired
+    private PenggunaDao penggunaDao;
 
     @PostMapping("/login")
-    public EntityModel<Pengguna> login(String username, String password){
-       Pengguna foundUser = (Pengguna) penggunaService.getUsernameAndPassword(user.getUsername(), user.getPassword());
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password){
+        List<Pengguna> user = penggunaDao.getUsernameAndPassword(username, password);
 
-
+        if(user.isEmpty()){
+            return ResponseEntity.status(401).body("Username atau password salah");
+        }
+        return ResponseEntity.ok().body("Login berhasil!");
     }
 }

@@ -1,13 +1,13 @@
 package com.miniproject.gudangdadakan.Model;
 
 public class Pengguna {
-    private long id;
+    private String id;
     private String username;
     private String email;
     private String password;
     private String role;
 
-    public Pengguna(long id, String username, String email, String password, String role) {
+    public Pengguna(String id, String username, String email, String password, String role) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -15,11 +15,11 @@ public class Pengguna {
         this.role = role;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
