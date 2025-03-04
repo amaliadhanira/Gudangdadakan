@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
@@ -19,7 +20,10 @@ public class PenggunaController {
     private PenggunaDao penggunaDao;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password){
+    public ResponseEntity<String> login(@RequestBody Map<String, String> request){
+        String username = request.get("username");
+        String password = request.get("password");
+
         String hashedPassword = MD5Util.hash(password);
 
         List<Pengguna> user = penggunaDao.getUsernameAndPassword(username, hashedPassword);
